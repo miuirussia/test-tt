@@ -8,8 +8,7 @@ export function sort(a, b, sortBy, direction = 1) {
             return direction;
         return 0;
     } else {
-        let nameA = parseInt(left, 10), nameB = parseInt(right, 10);
-        return direction * (nameA - nameB);
+        return direction * (left - right);
     }
 }
 

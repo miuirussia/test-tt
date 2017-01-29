@@ -16,7 +16,7 @@ class App extends Component {
         return (
             <div className="App">
                 <div className="container">
-                    <Table data={ require('./data/gen.json') } perPage={20} header={header}/>
+                    <Table header={header} data={ require('./data/gen.json') } perPage={20} />
                 </div>
             </div>
         );

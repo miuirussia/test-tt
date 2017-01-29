@@ -7,7 +7,7 @@ import './index.css';
 if(!Array.prototype.paginate) {
     Array.prototype.paginate = function (page = 1, perPage = 20) { // eslint-disable-line
         const totalPages = Math.ceil(this.length / perPage);
-        const currentPage = (page > totalPages) ? totalPages : page;
+        const currentPage = (page > totalPages && totalPages > 0) ? totalPages : page;
         const offset = (currentPage - 1) * perPage;
         return {
             currentPage: currentPage,

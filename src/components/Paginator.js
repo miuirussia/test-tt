@@ -4,9 +4,9 @@ import './Paginator.css';
 const Paginator = ({onBack, onNext, currentPage, totalPages}) => {
     return (
         <div className="paginator">
-            <a className="btn btn-default" onClick={onBack}><span>&larr;</span> Назад</a>
+            <a className="btn btn-default" onClick={onBack} disabled={ currentPage === 1 }><span>&larr;</span> Назад</a>
             <span className="current">{ currentPage } / { totalPages }</span>
-            <a className="btn btn-default" onClick={onNext}>Вперед <span>&rarr;</span></a>
+            <a className="btn btn-default" onClick={onNext} disabled={ currentPage === totalPages }>Вперед <span>&rarr;</span></a>
         </div>
     );
 };

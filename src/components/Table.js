@@ -21,11 +21,13 @@ class Table extends Component {
             displayedData: [],
             sorting: {}
         };
+        this.handleBackPage = this.handleBackPage.bind(this);
+        this.handleNextPage = this.handleNextPage.bind(this);
     }
 
     componentDidMount() {
         this.setState((prevState, props) => {
-            let perPage = localStorage['perPage'] || props.perPage;
+            let perPage = parseInt(localStorage['perPage'] || props.perPage, 10);
             let sorting = Utils.getHashParams() || {};
             let data = props.data;
             if(sorting.by) {
