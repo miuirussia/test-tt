@@ -26,7 +26,7 @@ class Table extends Component {
     componentDidMount() {
         this.setState((prevState, props) => {
             let perPage = localStorage['perPage'] || props.perPage;
-            let sorting = JSON.parse(localStorage['sorting'] || "{}");
+            let sorting = Utils.getHashParams() || {};
             let data = props.data;
             if(sorting.by) {
                 data = data.sort((a,b) => Utils.sort(a, b, sorting.by, sorting.direction));
@@ -104,7 +104,7 @@ class Table extends Component {
                 }
             }
             let data = prevState.data.sort((a,b) => Utils.sort(a, b, sortBy, sortDirection));
-            localStorage.setItem("sorting", JSON.stringify({by: sortBy, direction: sortDirection}));
+            location.hash = `by=${sortBy}&direction=${sortDirection}`;
             return {data: data, sorting: {by: sortBy, direction: sortDirection}};
         });
         this.computeDisplayedData();

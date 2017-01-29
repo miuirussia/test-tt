@@ -12,3 +12,21 @@ export function sort(a, b, sortBy, direction = 1) {
         return direction * (nameA - nameB);
     }
 }
+
+export function getHashParams() {
+    let hashParams = {};
+    let a = /\+/g,  // Regex for replacing addition symbol with a space
+        r = /([^&;=]+)=?([^&;]*)/g,
+        d = function (s) {
+            return decodeURIComponent(s.replace(a, " "));
+        },
+        q = window.location.hash.substring(1);
+
+    let e = r.exec(q);
+    while (e !== null) {
+        hashParams[d(e[1])] = d(e[2]);
+        e = r.exec(q);
+    }
+
+    return hashParams;
+}

@@ -1,17 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class SortableHeader extends Component {
-    render() {
-        return (
-            <thead>
-            <tr>
-                {Object.keys(this.props.headers).map((item) => {
-                    return <th key={item} id={item} onClick={this.props.onSort}>{this.props.headers[item]}</th>
-                })}
-            </tr>
-            </thead>
-        );
-    }
-}
+const SortableHeader = ({headers, onSort}) => {
+    return (
+        <thead>
+        <tr>
+            {Object.keys(headers).map((item) => {
+                return <th key={item} id={item} onClick={onSort}>{headers[item]}</th>
+            })}
+        </tr>
+        </thead>
+    );
+};
 
 export default SortableHeader;

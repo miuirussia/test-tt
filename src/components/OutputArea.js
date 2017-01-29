@@ -1,13 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class OutputArea extends Component {
-    render() {
-        return (
-            <div className="form-group">
-                <textarea className="form-control" rows="3" value={ this.props.text }/>
-            </div>
-        );
-    }
-}
+const OutputArea = ({ text }) => {
+    return (
+        <div className="form-group">
+            <textarea className="form-control" rows="3" value={ text }/>
+        </div>
+    );
+};
 
 export default OutputArea;
