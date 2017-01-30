@@ -3,7 +3,7 @@ import React from 'react';
 const OutputArea = ({ text }) => {
     return (
         <div className="form-group">
-            <textarea className="form-control" rows="3" value={ text }/>
+            <textarea className="form-control" rows={text.split(/\r\n|\r|\n/).length} value={ text }/>
         </div>
     );
 };
