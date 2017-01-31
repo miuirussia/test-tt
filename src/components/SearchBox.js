@@ -3,7 +3,7 @@ import React from 'react';
 const SearchBox = ({onSearch}) => {
     return (
         <div className="form-group">
-            <label>Поиск:</label>
+            <label>Фильтр:</label>
             <input className="form-control search" id="search" type="text" onChange={onSearch}/>
         </div>
     );
