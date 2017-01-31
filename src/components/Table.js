@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import csv from 'fast-csv';
+import {autobind} from "core-decorators";
 import SearchBox from './SearchBox';
 import ExportBox from './ExportBox';
 import Paginator from './Paginator';
@@ -47,7 +48,8 @@ class Table extends Component {
         this.computeDisplayedData();
     }
 
-    computeDisplayedData = () => {
+    @autobind
+    computeDisplayedData() {
         this.setState((prevState) => {
             let paginate = prevState.data.paginate(prevState.page, prevState.perPage);
             return {
@@ -56,27 +58,30 @@ class Table extends Component {
                 page: paginate.currentPage
             }
         });
-    };
+    }
 
-    handleBackPage = (event) => {
+    @autobind
+    handleBackPage(event) {
         event.preventDefault();
         this.setState((prev) => {
             if (prev.page > 1)
                 return {page: prev.page - 1}
         });
         this.computeDisplayedData();
-    };
+    }
 
-    handleNextPage = (event) => {
+    @autobind
+    handleNextPage(event) {
         event.preventDefault();
         this.setState((prevState) => {
             if (prevState.page < prevState.totalPages)
                 return {page: prevState.page + 1}
         });
         this.computeDisplayedData();
-    };
+    }
 
-    handleSearch = (event) => {
+    @autobind
+    handleSearch(event) {
         event.preventDefault();
         const searchWord = event.target.value;
         this.setState((prevState, props) => {
@@ -88,18 +93,20 @@ class Table extends Component {
             return {data: data};
         });
         this.computeDisplayedData();
-    };
+    }
 
-    handleExport = event => {
+    @autobind
+    handleExport(event) {
         event.preventDefault();
         csv.writeToString(this.state.data, (err, data) => {
             this.setState(() => {
                 return {csv: data};
             });
         });
-    };
+    }
 
-    handleSort = event => {
+    @autobind
+    handleSort(event) {
         event.preventDefault();
         const sortBy = event.target.id;
         this.setState((prevState) => {
@@ -114,9 +121,10 @@ class Table extends Component {
             return {data: data, sorting: {by: sortBy, direction: sortDirection}};
         });
         this.computeDisplayedData();
-    };
+    }
 
-    handleItemPerPageChange = event => {
+    @autobind
+    handleItemPerPageChange(event) {
         event.preventDefault();
         let perPage = parseInt(event.target.value, 10);
         localStorage.setItem("perPage", perPage);
@@ -124,9 +132,10 @@ class Table extends Component {
             return {perPage: perPage}
         });
         this.computeDisplayedData();
-    };
+    }
 
-    handleImportChange = event => {
+    @autobind
+    handleImportChange(event) {
         event.preventDefault();
         const data = event.target.value;
         this.setState(() => {
@@ -145,10 +154,10 @@ class Table extends Component {
                     <ImportArea onChange={this.handleImportChange}/>
                 </div>
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-lg-3">
                         <ItemPerPage onItemPerPageChange={this.handleItemPerPageChange} perPage={ perPage }/>
                     </div>
-                    <div className="col-md-9">
+                    <div className="col-lg-9">
                         <SearchBox onSearch={this.handleSearch}/>
                     </div>
                 </div>
