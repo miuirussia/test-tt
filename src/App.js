@@ -1,3 +1,4 @@
+import 'es6-promise/auto';
 import React, {Component} from 'react';
 import Table from './components/Table';
 import './App.css';

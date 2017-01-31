@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
-//Pagination polyfill
+// Pagination polyfill
 if(!Array.prototype.paginate) {
     Array.prototype.paginate = function (page = 1, perPage = 20) { // eslint-disable-line
         const totalPages = Math.ceil(this.length / perPage);

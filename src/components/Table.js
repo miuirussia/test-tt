@@ -3,6 +3,7 @@ import csv from 'fast-csv';
 import SearchBox from './SearchBox';
 import ExportBox from './ExportBox';
 import Paginator from './Paginator';
+import ImportArea from './ImportArea';
 import Row from './TableRow';
 import OutputArea from './OutputArea';
 import SortableHeader from './SortableHeader';
@@ -26,7 +27,12 @@ class Table extends Component {
 
     componentDidMount() {
         this.setState((prevState, props) => {
-            let perPage = parseInt(localStorage['perPage'] || props.perPage, 10);
+            let perPage;
+            try {
+                perPage = parseInt(localStorage['perPage'] || props.perPage, 10);
+            } catch (exception) {
+                perPage = props.perPage;
+            }
             let sorting = Utils.getHashParams() || {};
             let data = props.data;
             if (sorting.by) {
@@ -120,12 +126,27 @@ class Table extends Component {
         this.computeDisplayedData();
     };
 
+    handleImportChange = event => {
+        event.preventDefault();
+        const data = event.target.value;
+        this.setState(() => {
+            return {data: JSON.parse(data)}
+        });
+        this.computeDisplayedData();
+    };
+
     render() {
+        const {header} = this.props;
+        const {perPage, displayedData, page, totalPages, csv} = this.state;
+
         return (
             <div>
                 <div className="row">
+                    <ImportArea onChange={this.handleImportChange}/>
+                </div>
+                <div className="row">
                     <div className="col-md-3">
-                        <ItemPerPage onItemPerPageChange={this.handleItemPerPageChange} perPage={ this.state.perPage }/>
+                        <ItemPerPage onItemPerPageChange={this.handleItemPerPageChange} perPage={ perPage }/>
                     </div>
                     <div className="col-md-9">
                         <SearchBox onSearch={this.handleSearch}/>
@@ -133,9 +154,9 @@ class Table extends Component {
                 </div>
                 <div className="row">
                     <table className="table table-striped">
-                        <SortableHeader headers={this.props.header} onSort={this.handleSort}/>
+                        <SortableHeader headers={header} onSort={this.handleSort}/>
                         <tbody>
-                        {this.state.displayedData.map((item) =>
+                        {displayedData.map((item) =>
                             <Row key={item.id} item={item}/>
                         )}
                         </tbody>
@@ -144,12 +165,12 @@ class Table extends Component {
                 <div className="row">
                     <Paginator onBack={ this.handleBackPage}
                                onNext={this.handleNextPage}
-                               currentPage={this.state.page}
-                               totalPages={this.state.totalPages}/>
+                               currentPage={page}
+                               totalPages={totalPages}/>
                 </div>
                 <div className="row">
                     <ExportBox onExport={ this.handleExport }/>
-                    <OutputArea text={this.state.csv}/>
+                    <OutputArea text={csv}/>
                 </div>
             </div>
         );
